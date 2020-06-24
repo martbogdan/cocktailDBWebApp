@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
+<head th:replace="base-layout :: head">
     <meta charset="UTF-8">
     <title>Drink info</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -9,6 +9,7 @@
     <link href="/css/core.css" rel="stylesheet" media="screen" th:href="@{/css/core.css}"/>
 </head>
 <body>
+<div th:replace="base-layout :: header"></div>
     <input type="hidden" name="id" th:value="${cocktail.idDrink}">
     <div class="container">
         <div class="img-fluid" th:if="*{cocktail.strDrinkThumb==null}"><img width="200" src="/images/def_cocktail.png" alt="img"></div>

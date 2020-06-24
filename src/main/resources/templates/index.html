@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="base-layout :: head">
     <meta charset="UTF-8">
     <title>Bar</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -9,10 +9,25 @@
     <link href="/css/core.css" rel="stylesheet" media="screen" th:href="@{/css/core.css}"/>
 </head>
 <body>
-    <button><a th:href="@{/search/{drinkName}(drinkName=${drinkName})}">search</a></button>
+<div th:replace="base-layout :: header"></div>
+<!--    <button><a th:href="@{/search/{drinkName}(drinkName=${drinkName})}">search</a></button>-->
+
+    <form th:action="@{/search/{drinkName}(drinkName=${drinkName})}">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input type="submit"
+                           name="register-submit"
+                           id="register-submit"
+                           class="form-control btn btn-info"
+                           value="Search">
+                </div>
+            </div>
+        </div>
+    </form>
 
     <div>
-        <p>Cocktail list</p>
+        <p></p>
         <div class="container">
             <div class="row" >
                 <div class="col-md-6 col-lg-4 col-xl-3" th:each="cocktail : ${cocktails}">
@@ -23,7 +38,7 @@
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${cocktail.strDrink}">name</h5>
 <!--                                <p class="card-text" th:text="${cocktail.instructions}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                <a th:href="@{/drink/{id}(id=${cocktail.idDrink})}" class="btn btn-primary">Details</a>
                             </div>
                         </div>
                     </div>

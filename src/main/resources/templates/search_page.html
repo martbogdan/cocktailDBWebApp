@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="base-layout :: head">
     <meta charset="UTF-8">
     <title>Search</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -9,9 +9,33 @@
     <link href="/css/core.css" rel="stylesheet" media="screen" th:href="@{/css/core.css}"/>
 </head>
 <body>
+<div th:replace="base-layout :: header"></div>
     <form th:action="@{/search/found/{drinkName}(drinkName=${drinkName})}" method="get">
-        <input type="text" id="drinkname" name="drinkname" placeholder="search drink">
-        <input type="submit", id="search" value="search">
+<!--        <input type="text" id="drinkname" name="drinkname" placeholder="search drink">-->
+<!--        <input type="submit", id="search" value="search">-->
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input type="text"
+                           id="drinkname"
+                           name="drinkname"
+                           class="form-control"
+                           autofocus="autofocus"
+                           placeholder="search drink">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input type="submit"
+                           name="register-submit"
+                           id="register-submit"
+                           class="form-control btn btn-info"
+                           value="Search">
+                </div>
+            </div>
+        </div>
     </form>
 
     <div class="container">
@@ -25,7 +49,7 @@
                             <h4 class="card-title" th:text="${cocktail.strDrink}">Name</h4>
                             <span>Glass: </span><span class="card-text" th:text="${cocktail.strGlass}">Glass</span>
 <!--                            <p class="card-text" th:text="${cocktail.instructions}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
-                            <a th:href="@{/drink/{id}(id=${cocktail.idDrink})}" class="btn btn-primary">Go somewhere</a>
+                            <a th:href="@{/drink/{id}(id=${cocktail.idDrink})}" class="btn btn-primary">Details</a>
                         </div>
                     </div>
                 </div>
