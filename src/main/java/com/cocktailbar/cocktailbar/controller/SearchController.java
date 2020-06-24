@@ -38,13 +38,16 @@ public class SearchController {
         cocktailService.clearTmpDB();
         model.addAttribute("drinkName", drinkname);
         JSONObject json;
+        JSONArray jsonArray;
         try {
             json = JsonReader.readJsonFromUrl(API_BASE_URL + DRINK_FIND + SEARCH_NAME + drinkname);
-            JSONArray jsonArray = json.getJSONArray("drinks");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonDrink = jsonArray.getJSONObject(i);
-                Cocktail cocktail = cocktailService.getFromJSON(jsonDrink);
-                cocktailService.addCocktail(cocktail);
+            if (!json.isNull("drinks")) {
+                jsonArray = json.getJSONArray("drinks");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonDrink = jsonArray.getJSONObject(i);
+                    Cocktail cocktail = cocktailService.getFromJSON(jsonDrink);
+                    cocktailService.addCocktail(cocktail);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
