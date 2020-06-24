@@ -1,9 +1,11 @@
 package com.cocktailbar.cocktailbar.controller;
 
 import com.cocktailbar.cocktailbar.entity.Cocktail;
+import com.cocktailbar.cocktailbar.service.CocktailService;
 import com.cocktailbar.cocktailbar.service.JsonReader;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,9 @@ public class SearchController {
     private static final String API_BASE_URL = "https://www.thecocktaildb.com";
     private static final String DRINK_FIND = "/api/json/v1/1/search.php";
     private static final String SEARCH_NAME = "?s=";
+
+    @Autowired
+    CocktailService cocktailService;
 
     private List<Cocktail> cocktailList = new ArrayList<>();
 
@@ -38,22 +43,7 @@ public class SearchController {
             JSONArray jsonArray = json.getJSONArray("drinks");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonDrink = jsonArray.getJSONObject(i);
-                Cocktail cocktail = new Cocktail();
-
-                long idDrink = Long.parseLong(jsonDrink.getString("idDrink"));
-                String strDrink = jsonDrink.getString("strDrink");
-                String strAlcoholic = jsonDrink.getString("strAlcoholic");
-                String strGlass = jsonDrink.getString("strGlass");
-                String strInstructions = jsonDrink.getString("strInstructions");
-                String strDrinkThumb = jsonDrink.getString("strDrinkThumb");
-
-                cocktail.setIdDrink(idDrink);
-                cocktail.setStrDrink(strDrink);
-                cocktail.setStrAlcoholic(strAlcoholic);
-                cocktail.setStrGlass(strGlass);
-                cocktail.setInstructions(strInstructions);
-                cocktail.setStrDrinkThumb(strDrinkThumb);
-
+                Cocktail cocktail = cocktailService.getFromJSON(jsonDrink);
                 cocktailList.add(cocktail);
             }
         } catch (IOException e) {
