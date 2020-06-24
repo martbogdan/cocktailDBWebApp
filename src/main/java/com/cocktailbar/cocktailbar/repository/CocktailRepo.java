@@ -17,6 +17,7 @@ public interface CocktailRepo {
     Cocktail getCocktailById(Long id);
 
     void clearList();
+    void clearHistory();
 
     List<Cocktail> getAll();
     List<Cocktail> getAllViewed();

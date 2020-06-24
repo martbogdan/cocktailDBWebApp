@@ -38,6 +38,10 @@ public class CocktailService {
         cocktailRepo.clearList();
     }
 
+    public void clearHistory() {
+        cocktailRepo.clearHistory();
+    }
+
     public List<Cocktail> getAll() {
         return cocktailRepo.getAll();
     }

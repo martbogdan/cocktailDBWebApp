@@ -36,6 +36,10 @@ public class CocktailTempDB implements CocktailRepo{
         cocktailsTMPDB.clear();
     }
 
+    public void clearHistory() {
+        viewedCocktails.clear();
+    }
+
     @Override
     public List<Cocktail> getAll() {
         return cocktailsTMPDB;

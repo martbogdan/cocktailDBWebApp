@@ -21,4 +21,12 @@ public class MainController {
         model.addAttribute("cocktails", cocktailService.getAllViewed());
         return "index";
     }
+
+    @GetMapping("/clear")
+    public String getMAinPageClear(Model model) {
+        if (cocktailService.getAllViewed().size() > 0) {
+            cocktailService.clearHistory();
+        }
+        return "redirect:/";
+    }
 }
