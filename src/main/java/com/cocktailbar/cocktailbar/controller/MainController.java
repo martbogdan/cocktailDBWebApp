@@ -18,7 +18,7 @@ public class MainController {
 
     @GetMapping("/")
     public String getMainPage(Model model) {
-        model.addAttribute("cocktails", cocktailService.getAll());
+        model.addAttribute("cocktails", cocktailService.getAllViewed());
         return "index";
     }
 }

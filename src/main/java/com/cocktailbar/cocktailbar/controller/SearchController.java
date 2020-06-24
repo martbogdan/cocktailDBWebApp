@@ -25,17 +25,17 @@ public class SearchController {
     @Autowired
     CocktailService cocktailService;
 
-    private List<Cocktail> cocktailList = new ArrayList<>();
+    //private List<Cocktail> cocktailList = new ArrayList<>();
 
     @GetMapping("/search")
     public String getSearchPage(Model model){
-        model.addAttribute("cocktailsjson", cocktailList);
+        model.addAttribute("cocktailsjson", cocktailService.getAll());
         return "search_page";
     }
 
     @GetMapping("/search/found")
     public String getSearchPage( @RequestParam String drinkname, Model model) {
-        cocktailList.clear();
+        cocktailService.clearTmpDB();
         model.addAttribute("drinkName", drinkname);
         JSONObject json;
         try {
@@ -44,12 +44,12 @@ public class SearchController {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonDrink = jsonArray.getJSONObject(i);
                 Cocktail cocktail = cocktailService.getFromJSON(jsonDrink);
-                cocktailList.add(cocktail);
+                cocktailService.addCocktail(cocktail);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        model.addAttribute("cocktailsjson", cocktailList);
+        model.addAttribute("cocktailsjson", cocktailService.getAll());
         return "redirect:/search";
     }
 

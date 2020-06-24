@@ -1,28 +1,49 @@
 package com.cocktailbar.cocktailbar.service;
 
 import com.cocktailbar.cocktailbar.entity.Cocktail;
+import com.cocktailbar.cocktailbar.repository.CocktailRepo;
 import com.cocktailbar.cocktailbar.repository.CocktailRepoJPA;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
 public class CocktailService {
-    private CocktailRepoJPA cocktailRepoJPA;
+
+    private final CocktailRepo cocktailRepo;
 
     @Autowired
-    public CocktailService(CocktailRepoJPA cocktailRepoJPA) {
-        this.cocktailRepoJPA = cocktailRepoJPA;
+    public CocktailService(@Qualifier("tempDB") CocktailRepo cocktailRepo) {
+        this.cocktailRepo = cocktailRepo;
+    }
+
+    public void addCocktail(Cocktail cocktail) {
+        cocktailRepo.insertCocktail(cocktail);
+    }
+
+    public void addCocktailToViewed(Cocktail cocktail) {
+        cocktailRepo.addToViewed(cocktail);
+    }
+
+    public Cocktail getCocktailById(Long id) {
+        return cocktailRepo.getCocktailById(id);
+    }
+
+    public void clearTmpDB() {
+        cocktailRepo.clearList();
     }
 
     public List<Cocktail> getAll() {
-        return cocktailRepoJPA.findAll();
+        return cocktailRepo.getAll();
     }
 
-    public Cocktail getByName(String drinkName) {
-        return cocktailRepoJPA.findByStrDrink(drinkName);
+    public List<Cocktail> getAllViewed() {
+        return cocktailRepo.getAllViewed();
     }
 
     public Cocktail getFromJSON(JSONObject jsonDrink) {
@@ -53,20 +74,64 @@ public class CocktailService {
         cocktail.setIngredient15(jsonDrink.get("strIngredient15") != null ? String.valueOf(jsonDrink.get("strIngredient15")) : null);
 
         cocktail.setMeasure1(jsonDrink.get("strMeasure1") != null ? String.valueOf(jsonDrink.get("strMeasure1")) : null);
-        cocktail.setMeasure1(jsonDrink.get("strMeasure2") != null ? String.valueOf(jsonDrink.get("strMeasure2")) : null);
-        cocktail.setMeasure1(jsonDrink.get("strMeasure3") != null ? String.valueOf(jsonDrink.get("strMeasure3")) : null);
-        cocktail.setMeasure1(jsonDrink.get("strMeasure4") != null ? String.valueOf(jsonDrink.get("strMeasure4")) : null);
-        cocktail.setMeasure1(jsonDrink.get("strMeasure5") != null ? String.valueOf(jsonDrink.get("strMeasure5")) : null);
-        cocktail.setMeasure1(jsonDrink.get("strMeasure6") != null ? String.valueOf(jsonDrink.get("strMeasure6")) : null);
-        cocktail.setMeasure1(jsonDrink.get("strMeasure7") != null ? String.valueOf(jsonDrink.get("strMeasure7")) : null);
-        cocktail.setMeasure1(jsonDrink.get("strMeasure8") != null ? String.valueOf(jsonDrink.get("strMeasure8")) : null);
-        cocktail.setMeasure1(jsonDrink.get("strMeasure9") != null ? String.valueOf(jsonDrink.get("strMeasure9")) : null);
-        cocktail.setMeasure1(jsonDrink.get("strMeasure10") != null ? String.valueOf(jsonDrink.get("strMeasure10")) : null);
-        cocktail.setMeasure1(jsonDrink.get("strMeasure11") != null ? String.valueOf(jsonDrink.get("strMeasure11")) : null);
-        cocktail.setMeasure1(jsonDrink.get("strMeasure12") != null ? String.valueOf(jsonDrink.get("strMeasure12")) : null);
-        cocktail.setMeasure1(jsonDrink.get("strMeasure13") != null ? String.valueOf(jsonDrink.get("strMeasure13")) : null);
-        cocktail.setMeasure1(jsonDrink.get("strMeasure14") != null ? String.valueOf(jsonDrink.get("strMeasure14")) : null);
-        cocktail.setMeasure1(jsonDrink.get("strMeasure15") != null ? String.valueOf(jsonDrink.get("strMeasure15")) : null);
+        cocktail.setMeasure2(jsonDrink.get("strMeasure2") != null ? String.valueOf(jsonDrink.get("strMeasure2")) : null);
+        cocktail.setMeasure3(jsonDrink.get("strMeasure3") != null ? String.valueOf(jsonDrink.get("strMeasure3")) : null);
+        cocktail.setMeasure4(jsonDrink.get("strMeasure4") != null ? String.valueOf(jsonDrink.get("strMeasure4")) : null);
+        cocktail.setMeasure5(jsonDrink.get("strMeasure5") != null ? String.valueOf(jsonDrink.get("strMeasure5")) : null);
+        cocktail.setMeasure6(jsonDrink.get("strMeasure6") != null ? String.valueOf(jsonDrink.get("strMeasure6")) : null);
+        cocktail.setMeasure7(jsonDrink.get("strMeasure7") != null ? String.valueOf(jsonDrink.get("strMeasure7")) : null);
+        cocktail.setMeasure8(jsonDrink.get("strMeasure8") != null ? String.valueOf(jsonDrink.get("strMeasure8")) : null);
+        cocktail.setMeasure9(jsonDrink.get("strMeasure9") != null ? String.valueOf(jsonDrink.get("strMeasure9")) : null);
+        cocktail.setMeasure10(jsonDrink.get("strMeasure10") != null ? String.valueOf(jsonDrink.get("strMeasure10")) : null);
+        cocktail.setMeasure11(jsonDrink.get("strMeasure11") != null ? String.valueOf(jsonDrink.get("strMeasure11")) : null);
+        cocktail.setMeasure12(jsonDrink.get("strMeasure12") != null ? String.valueOf(jsonDrink.get("strMeasure12")) : null);
+        cocktail.setMeasure13(jsonDrink.get("strMeasure13") != null ? String.valueOf(jsonDrink.get("strMeasure13")) : null);
+        cocktail.setMeasure14(jsonDrink.get("strMeasure14") != null ? String.valueOf(jsonDrink.get("strMeasure14")) : null);
+        cocktail.setMeasure15(jsonDrink.get("strMeasure15") != null ? String.valueOf(jsonDrink.get("strMeasure15")) : null);
         return cocktail;
+    }
+
+    public List<IngredientMeasure> getIngredientMeasures(Cocktail cocktail) {
+        List<IngredientMeasure> list = new ArrayList<>();
+        list.add(new IngredientMeasure(cocktail.getIngredient1(), cocktail.getMeasure1()));
+        list.add(new IngredientMeasure(cocktail.getIngredient2(), cocktail.getMeasure2()));
+        list.add(new IngredientMeasure(cocktail.getIngredient3(), cocktail.getMeasure3()));
+        list.add(new IngredientMeasure(cocktail.getIngredient4(), cocktail.getMeasure4()));
+        list.add(new IngredientMeasure(cocktail.getIngredient5(), cocktail.getMeasure5()));
+        list.add(new IngredientMeasure(cocktail.getIngredient6(), cocktail.getMeasure6()));
+        list.add(new IngredientMeasure(cocktail.getIngredient7(), cocktail.getMeasure7()));
+        list.add(new IngredientMeasure(cocktail.getIngredient8(), cocktail.getMeasure8()));
+        list.add(new IngredientMeasure(cocktail.getIngredient9(), cocktail.getMeasure9()));
+        list.add(new IngredientMeasure(cocktail.getIngredient10(), cocktail.getMeasure10()));
+        list.add(new IngredientMeasure(cocktail.getIngredient11(), cocktail.getMeasure11()));
+        list.add(new IngredientMeasure(cocktail.getIngredient12(), cocktail.getMeasure12()));
+        list.add(new IngredientMeasure(cocktail.getIngredient13(), cocktail.getMeasure13()));
+        list.add(new IngredientMeasure(cocktail.getIngredient14(), cocktail.getMeasure14()));
+        list.add(new IngredientMeasure(cocktail.getIngredient15(), cocktail.getMeasure15()));
+
+        list.removeIf(ingredientMeasure -> ingredientMeasure.getIngredient().equals("null"));
+        return list;
+    }
+
+    public class IngredientMeasure {
+        private String ingredient;
+        private String measure;
+
+        public IngredientMeasure(String ingredient, String measure) {
+            this.ingredient = ingredient;
+            if (!ingredient.equals("null") && measure.equals("null")) {
+                this.measure = "";
+            } else {
+                this.measure = measure;
+            }
+        }
+
+        public String getIngredient() {
+            return ingredient;
+        }
+
+        public String getMeasure() {
+            return measure;
+        }
     }
 }

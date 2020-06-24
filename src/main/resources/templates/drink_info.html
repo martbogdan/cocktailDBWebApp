@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Drink info</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="/css/core.css" rel="stylesheet" media="screen" th:href="@{/css/core.css}"/>
+</head>
+<body>
+    <input type="hidden" name="id" th:value="${cocktail.idDrink}">
+    <div class="container">
+        <div class="img-fluid" th:if="*{cocktail.strDrinkThumb==null}"><img width="200" src="/images/def_cocktail.png" alt="img"></div>
+        <div th:unless="*{cocktail.strDrinkThumb==null}"><img width="200" th:src="*{cocktail.strDrinkThumb}"></div>
+
+        <div class="s_product_text">
+            <h3 th:text="${cocktail.strDrink}"></h3>
+            <h3><span>Alcoholic: </span><span  th:text="${cocktail.strAlcoholic}"></span></h3>
+            <h5><span>Glass: </span><span  th:text="${cocktail.strGlass}"></span></h5>
+            <div><span>Category: </span><span  th:text="${cocktail.strCategory}"></span></div>
+
+            <table class="table" align="center">
+                <thead>
+                <th></th>
+                <th></th>
+                </thead>
+                <tbody th:each="ingredient : ${ingredients}">
+                <tr>
+                    <td th:text="${ingredient.ingredient}"></td>
+                    <td th:text="${ingredient.measure}"></td>
+                </tr>
+
+
+
+<!--                <tr><td th:text="${cocktail.ingredient1}"></td><td th:text="${cocktail.measure1}"></td></tr>-->
+<!--                <tr><td th:text="${cocktail.ingredient2}"></td><td th:text="${cocktail.measure2}"></td></tr>-->
+<!--                <tr><td th:text="${cocktail.ingredient3}"></td><td th:text="${cocktail.measure3}"></td></tr>-->
+<!--                <tr><td th:text="${cocktail.ingredient4}"></td><td th:text="${cocktail.measure4}"></td></tr>-->
+<!--                <tr><td th:text="${cocktail.ingredient5}"></td><td th:text="${cocktail.measure5}"></td></tr>-->
+<!--                <tr><td th:text="${cocktail.ingredient6}"></td><td th:text="${cocktail.measure6}"></td></tr>-->
+<!--                <tr><td th:text="${cocktail.ingredient7}"></td><td th:text="${cocktail.measure7}"></td></tr>-->
+<!--                <tr><td th:text="${cocktail.ingredient8}"></td><td th:text="${cocktail.measure8}"></td></tr>-->
+<!--                <tr><td th:text="${cocktail.ingredient9}"></td><td th:text="${cocktail.measure9}"></td></tr>-->
+<!--                <tr><td th:text="${cocktail.ingredient10}"></td><td th:text="${cocktail.measure10}"></td></tr>-->
+<!--                <tr><td th:text="${cocktail.ingredient11}"></td><td th:text="${cocktail.measure11}"></td></tr>-->
+<!--                <tr><td th:text="${cocktail.ingredient12}"></td><td th:text="${cocktail.measure12}"></td></tr>-->
+<!--                <tr><td th:text="${cocktail.ingredient13}"></td><td th:text="${cocktail.measure13}"></td></tr>-->
+<!--                <tr><td th:text="${cocktail.ingredient14}"></td><td th:text="${cocktail.measure14}"></td></tr>-->
+<!--                <tr><td th:text="${cocktail.ingredient15}"></td><td th:text="${cocktail.measure15}"></td></tr>-->
+
+                </tbody>
+            </table>
+
+
+<!--            <div><span th:text="${cocktail.ingredient1}"></span><span> : </span><span th:text="${cocktail.measure1}"></span></div>-->
+<!--            <div><span th:text="${cocktail.ingredient2}"></span><span> : </span><span th:text="${cocktail.measure2}"></span></div>-->
+<!--            <div><span th:text="${cocktail.ingredient3}"></span><span> : </span><span th:text="${cocktail.measure3}"></span></div>-->
+<!--            <div><span th:text="${cocktail.ingredient4}"></span><span> : </span><span th:text="${cocktail.measure4}"></span></div>-->
+<!--            <div><span th:text="${cocktail.ingredient5}"></span><span> : </span><span th:text="${cocktail.measure5}"></span></div>-->
+<!--            <div><span th:text="${cocktail.ingredient6}"></span><span> : </span><span th:text="${cocktail.measure6}"></span></div>-->
+<!--            <div><span th:text="${cocktail.ingredient7}"></span><span> : </span><span th:text="${cocktail.measure7}"></span></div>-->
+<!--            <div><span th:text="${cocktail.ingredient8}"></span><span> : </span><span th:text="${cocktail.measure8}"></span></div>-->
+<!--            <div><span th:text="${cocktail.ingredient9}"></span><span> : </span><span th:text="${cocktail.measure9}"></span></div>-->
+<!--            <div><span th:text="${cocktail.ingredient10}"></span><span> : </span><span th:text="${cocktail.measure10}"></span></div>-->
+<!--            <div><span th:text="${cocktail.ingredient11}"></span><span> : </span><span th:text="${cocktail.measure11}"></span></div>-->
+<!--            <div><span th:text="${cocktail.ingredient12}"></span><span> : </span><span th:text="${cocktail.measure12}"></span></div>-->
+<!--            <div><span th:text="${cocktail.ingredient13}"></span><span> : </span><span th:text="${cocktail.measure13}"></span></div>-->
+<!--            <div><span th:text="${cocktail.ingredient14}"></span><span> : </span><span th:text="${cocktail.measure14}"></span></div>-->
+<!--            <div><span th:text="${cocktail.ingredient15}"></span><span> : </span><span th:text="${cocktail.measure15}"></span></div>-->
+
+            <p><span th:text="${cocktail.instructions}"></span></p>
+        </div>
+    </div>
+</body>
+</html>
