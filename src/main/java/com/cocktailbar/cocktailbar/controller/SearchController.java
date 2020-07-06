@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,8 +35,9 @@ public class SearchController {
     }
 
     @GetMapping("/search/found")
-    public String getSearchPage( @RequestParam String drinkname, Model model) {
+    public String getSearchPage(@RequestParam String drinkname, Model model, RedirectAttributes attributes) {
         cocktailService.clearTmpDB();
+        String message = "";
         model.addAttribute("drinkName", drinkname);
         JSONObject json;
         JSONArray jsonArray;
@@ -48,10 +50,13 @@ public class SearchController {
                     Cocktail cocktail = cocktailService.getFromJSON(jsonDrink);
                     cocktailService.addCocktail(cocktail);
                 }
+            } else {
+                message = "Cocktails with name \'" + drinkname + "\' not found";
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        attributes.addFlashAttribute("message", message);
         model.addAttribute("cocktailsjson", cocktailService.getAll());
         return "redirect:/search";
     }
