@@ -10,7 +10,14 @@
 </head>
 <body>
 <div th:replace="base-layout :: header"></div>
-<!--    <button><a th:href="@{/search/{drinkName}(drinkName=${drinkName})}">search</a></button>-->
+
+
+
+    <h2 style="color: tomato; text-align: center" th:align="center">Welcome to Cocktail Bar!</h2>
+
+
+
+
 
     <form th:action="@{/search/{drinkName}(drinkName=${drinkName})}">
         <div class="form-group">
@@ -20,7 +27,7 @@
                            name="register-submit"
                            id="register-submit"
                            class="form-control btn btn-info"
-                           value="Search">
+                           value="Start search drink">
                 </div>
             </div>
         </div>

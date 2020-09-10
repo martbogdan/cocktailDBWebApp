@@ -4,13 +4,15 @@ import com.cocktailbar.cocktailbar.entity.Cocktail;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository("tempDB")
 public class CocktailTempDB implements CocktailRepo{
-
+    private static final int MAX_VIEWED_LIST_SIZE = 9;
     private static List<Cocktail> cocktailsTMPDB = new ArrayList<>();
-    private static List<Cocktail> viewedCocktails = new ArrayList<>();
+    private static LinkedList<Cocktail> viewedCocktails = new LinkedList<>();
 
     @Override
     public void insertCocktail(Cocktail cocktail) {
@@ -20,7 +22,12 @@ public class CocktailTempDB implements CocktailRepo{
     @Override
     public void addToViewed(Cocktail cocktail) {
         if (!viewedCocktails.contains(cocktail)) {
-            viewedCocktails.add(cocktail);
+            if (viewedCocktails.size() < MAX_VIEWED_LIST_SIZE) {
+                viewedCocktails.add(cocktail);
+            } else {
+                viewedCocktails.removeFirst();
+                viewedCocktails.addLast(cocktail);
+            }
         }
     }
 
