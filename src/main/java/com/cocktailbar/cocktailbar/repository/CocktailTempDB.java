@@ -3,6 +3,7 @@ package com.cocktailbar.cocktailbar.repository;
 import com.cocktailbar.cocktailbar.entity.Cocktail;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -35,7 +36,7 @@ public class CocktailTempDB implements CocktailRepo{
     public Cocktail getCocktailById(Long id) {
         return cocktailsTMPDB.stream()
                 .filter(cocktail -> cocktail.getIdDrink().equals(id))
-                .findAny().orElse(null);
+                .findAny().orElseThrow(() -> new EntityNotFoundException("Drink with id: " + id + " not found"));
     }
 
     @Override

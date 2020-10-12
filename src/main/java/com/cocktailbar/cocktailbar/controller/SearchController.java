@@ -19,14 +19,17 @@ import java.util.List;
 
 @Controller
 public class SearchController {
-    private static final String API_BASE_URL = "https://www.thecocktaildb.com";
-    private static final String DRINK_FIND = "/api/json/v1/1/search.php";
+    private static final String API_BASE_URL = "https://www.thecocktaildb.com/api/json/v1/1";
+    private static final String DRINK_FIND = "/search.php";
     private static final String SEARCH_NAME = "?s=";
+    private static final String DRINK_RANDOM = "/random.php";
+
+    private final CocktailService cocktailService;
 
     @Autowired
-    CocktailService cocktailService;
-
-    //private List<Cocktail> cocktailList = new ArrayList<>();
+    public SearchController(CocktailService cocktailService) {
+        this.cocktailService = cocktailService;
+    }
 
     @GetMapping("/search")
     public String getSearchPage(Model model){
@@ -59,6 +62,25 @@ public class SearchController {
         attributes.addFlashAttribute("message", message);
         model.addAttribute("cocktailsjson", cocktailService.getAll());
         return "redirect:/search";
+    }
+
+    @GetMapping("/search/random")
+    public String getDrinkRandom(Model model, RedirectAttributes attributes) {
+        JSONObject json;
+        JSONArray jsonArray;
+        Cocktail cocktail = null;
+        try {
+            json = JsonReader.readJsonFromUrl(API_BASE_URL + DRINK_RANDOM);
+            if (!json.isNull("drinks")) {
+                jsonArray = json.getJSONArray("drinks");
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                cocktail = cocktailService.getFromJSON(jsonObject);
+                cocktailService.addCocktail(cocktail);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/drink/" + cocktail.getIdDrink();
     }
 
 }
